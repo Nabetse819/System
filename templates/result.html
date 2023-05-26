@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Server Stats</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-4">Server Stats</h1>
+        {% if stats %}
+            <table class="table mt-4">
+                <thead>
+                    <tr>
+                        <th>Hostname</th>
+                        <th>Timestamp</th>
+                        <th>Ram Usage</th>
+                        <th>CPU Usage</th>
+                        <th>Disk Usage</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td  id='1'>{{ stats.hostname }}</td>
+                        <td id='2'>{{ stats.timestamp }}</td>
+                        <td id="3">{{ stats.ram_usage }}%</td>
+                        <td id="4">{{ stats.cpu_usage }}%</td>
+                        <td id="5">{{ stats.disk_usage }}%</td>
+                    </tr>
+                </tbody>
+            </table>
+        {% endif %}
+        {% if stats %}
+        <h1>Number of Notifications</h1>
+            <table class="table mt-4">
+                <thead>
+                    <tr>
+                        <th>Hostname</th>
+                        <th>Ram notifications</th>
+                        <th>CPU notifications</th>
+                        <th>Disk notifications</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td  id='11'>0</td>
+                        <td id='22'>0</td>
+                        <td id="33">0</td>
+                        <td id="44">0</td>
+                    </tr>
+                </tbody>
+            </table>
+        {% endif %}
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.3.2/socket.io.js" crossorigin="anonymous"></script>
+    <script>
+    var socket = io();
+    // Manejar el evento 'result_updated' enviado por el servidor WebSocket
+    socket.on('update', function(data) {
+        // Actualizar el contenido del elemento HTML con el resultado actualizado
+        document.getElementById('1').innerText = data.hostname;
+        document.getElementById('2').innerText = data.timestamp;
+        document.getElementById('3').innerText = data.ram_usage;
+        document.getElementById('4').innerText = data.cpu_usage;
+        document.getElementById('5').innerText = data.disk_usage;
+    });
+
+    socket.on('updateNotification', function(data) {
+        // Actualizar el contenido del elemento HTML con el resultado actualizado
+        document.getElementById('11').innerText = data.hostname;
+        document.getElementById('22').innerText = data.ram;
+        document.getElementById('33').innerText = data.cpu;
+        document.getElementById('44').innerText = data.disk;
+    });
+
+    </script>
+
+</body>
+</html>

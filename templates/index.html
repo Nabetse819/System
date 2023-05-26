@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Server Monitoring</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-4">Server Monitoring</h1>
+        <form action="/server_stats" method="post" class="mt-4">
+            <div class="mb-3">
+                <label for="hostname" class="form-label">Hostname:</label>
+                <input type="text" class="form-control" id="hostname" name="hostname" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Get Stats</button>
+        </form>
+        {% if message %}
+            <div class="alert alert-danger mt-4" role="alert">
+                {{ message }}
+            </div>
+        {% endif %}
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
